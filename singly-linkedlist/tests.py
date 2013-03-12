@@ -4,7 +4,7 @@ Automated tests.
 
 from unittest import TestCase, main
 
-from linkedlist import Node, SinglyLinkedList
+from singlylinkedlist import Node, SinglyLinkedList
 
 
 class TestLinkedList(TestCase):
