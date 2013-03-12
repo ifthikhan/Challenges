@@ -45,6 +45,27 @@ class TestLinkedList(TestCase):
         n1.next = n2
         self.assertIs(n1.next, n2)
 
+    def test_node_equal(self):
+        n1 = Node(1)
+        n2 = Node(2)
+        n1.next = n2
+
+        n3 = Node(1)
+        n4 = Node(2)
+        n3.next = n4
+        self.assertEqual(n1, n3)
+
+    def test_node_strr(self):
+        n = Node(1)
+        self.assertEqual(str(n), str(1))
+
+    def test_node_repr(self):
+        n = Node(1)
+        n2 = Node(2)
+        n.next = n2
+        self.assertEqual(repr(n),
+                         "Node({}, {})".format(repr(n.value), repr(n.next)))
+
 
 class TestReverseIterativeFunction(TestCase):
     """
@@ -63,10 +84,10 @@ class TestReverseIterativeFunction(TestCase):
         node = self.reversal_func(n1)
         self.assertIs(node, n1)
 
-    def test_reverse_odd(self):
+    def test_reverse_odd_len(self):
         self._reverse_variable_len(3)
 
-    def test_reverse_even(self):
+    def test_reverse_even_len(self):
         self._reverse_variable_len(4)
 
     def test_reverse_large(self):

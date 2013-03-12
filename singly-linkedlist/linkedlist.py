@@ -10,9 +10,9 @@ class Node(object):
 
     __slots__ = ['_value', '_next']
 
-    def __init__(self, value):
+    def __init__(self, value, next=None):
         self._value = value
-        self._next = None
+        self._next = next
 
     @property
     def value(self):
@@ -41,7 +41,15 @@ class Node(object):
             raise ValueError("next_node should be of type Node or None")
 
     def __str__(self):
-        return "<Node value={}>".format(self.value)
+        return str(self.value)
+
+    def __repr__(self):
+        return "{}({}, {})".format(self.__class__.__name__,
+                                   repr(self.value),
+                                   repr(self.next))
+
+    def __eq__(self, other):
+        return self.value == other.value and self.next == other.next
 
 
 def reverse_singly_linkedlist_iter(node):
