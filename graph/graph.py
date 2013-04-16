@@ -15,6 +15,7 @@ class Graph(object):
     def __init__(self, vertices):
         self.g = self.__construct(vertices)
         self.__num_edges = 0
+        self.__vertices = vertices
 
     def __construct(self, vertices):
         g = OrderedDict()
@@ -30,11 +31,16 @@ class Graph(object):
         self.g[w].append(v)
         self.__num_edges += 1
 
-    def adjacent_nodes(self, v):
+    def adjacent(self, v):
         """
-        Returns a list of adjacent nodes to the given vertex
+        Returns a list of adjacent vertices to the given vertex
         """
         return tuple(self.g[v])
+
+    @property
+    def vertices(self):
+        """Returns all the vertices in the graph."""
+        return self.__vertices
 
     @property
     def num_vertices(self):
