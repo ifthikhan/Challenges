@@ -5,12 +5,13 @@ Breadth first search algorithm
 from collections import OrderedDict
 
 from graph import Graph
+from digraph import DiGraph
 
 
 class BreadthFirstSearchPaths(object):
 
     def __init__(self, graph, s):
-        assert isinstance(graph, Graph)
+        assert isinstance(graph, (Graph, DiGraph))
         self.graph = graph
         self.s = s
         self.marked = OrderedDict.fromkeys(self.graph.vertices, value=False)
