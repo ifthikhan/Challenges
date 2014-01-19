@@ -59,6 +59,7 @@ class DiGraph(object):
         for v in self.vertices:
             for adj in self.adjacent(v):
                 g.add_edge(adj, v)
+        return g
 
     def __len__(self):
         return self.num_vertices
@@ -106,4 +107,5 @@ if __name__ == '__main__':
     g = get_populated_graph()
     print "Num vertices: %d" % g.num_vertices
     print "Num edges: %d" % g.num_edges
-    print "Graph: %s" % g
+    print "Graph: \n %s" % g
+    print "Reversed: \n %s" % g.reverse
