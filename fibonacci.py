@@ -20,5 +20,3 @@ for i in range(1, 30):
     l.append(fib(i))
 
 print l
-
-
