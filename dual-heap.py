@@ -26,6 +26,8 @@ class BinaryHeap(object):
 
     def get(self):
         last = len(self) - 1
+        if last == -1:
+            raise RuntimeError("Cannot get elements from an empty heap")
         self._exch(0, last)
         ret_val = self._vals.pop(last)
         self._sink()
@@ -176,6 +178,12 @@ class MaxBinaryHeapTestCase(unittest.TestCase, BinaryHeapTestBase):
         self.assertEqual(7, self.h.get())
         self.assertEqual(6, self.h.get())
         self.assertEqual(5, self.h.get())
+
+    def test_get_empty(self):
+        with self.assertRaises(RuntimeError):
+            self.h.get()
+
+
 
 
 class MinBinaryHeapTestCase(unittest.TestCase, BinaryHeapTestBase):
