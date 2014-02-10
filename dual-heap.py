@@ -32,6 +32,7 @@ class BinaryHeap(object):
         return self._vals[0]
 
     def _sink(self):
+        """Push the root down to satisfy the heap property"""
         parent_ix = 0
         left_ix, right_ix = self._get_children_ixs(parent_ix)
         while left_ix or right_ix:
@@ -42,41 +43,51 @@ class BinaryHeap(object):
                     to_exch = right_ix
             elif left_ix:
                 to_exch = left_ix
-            elif right_ix:
+            else:
                 to_exch = right_ix
-
             self._exch(parent_ix, to_exch)
             parent_ix = to_exch
             left_ix, right_ix = self._get_children_ixs(parent_ix)
 
     def _swim(self):
+        """Inspect and promote the last element to satisfy the heap property"""
         child_ix = len(self) - 1
-        if child_ix == 0:
-            return
         parent_ix = self._get_parent(child_ix)
-        while (self._test(parent_ix, child_ix)):
+        while (parent_ix is not None and self._test(parent_ix, child_ix)):
             self._exch(parent_ix, child_ix)
-            #TODO: UNGLY
-            if parent_ix == 0:
-                break
             child_ix = parent_ix
             parent_ix = self._get_parent(parent_ix)
 
     def _exch(self, ix_1, ix_2):
+        """Exchange the values of the given indices
+
+        :param int ix_1     First index
+        :param int ix_2     Second index
+        """
         tmp = self._vals[ix_1]
         self._vals[ix_1] = self._vals[ix_2]
         self._vals[ix_2] = tmp
 
     def _get_parent(self, child_ix):
+        """Return the parent for a given child. If child is root returns None.
+
+        :param int child_ix
+        """
+        if child_ix == 0:
+            return None
         t = 1 if child_ix & 1 else 2
         return (child_ix - t) / 2
 
     def _get_children_ixs(self, parent_ix):
+        """Return the indices of the children. None if out of bounds
+
+        :param int parent_ix    The parent index
+        """
         ix_left = (parent_ix * 2) + 1
         ix_right = ix_left + 1
         if ix_left >= len(self):
-            ix_left, ix_right = None, None
-        elif ix_right > len(self) - 1:
+            ix_left = None
+        if ix_right >= len(self):
             ix_right = None
         return ix_left, ix_right
 
