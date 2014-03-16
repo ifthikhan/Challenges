@@ -121,16 +121,12 @@ def _reverse_singly_linkedlist_iter(node):
     """
     if node.next is None:
         return node
-
-    nxt = node.next
-    node.next = None
-    while True:
-        nxtnxt = nxt.next
-        nxt.next = node
-        node = nxt
-        nxt = nxtnxt
-        if not nxtnxt:
-            break
+    prev = None
+    while node.next:
+        tmp = node.next
+        node.next = prev
+        prev = node
+        node = tmp
     return node
 
 
