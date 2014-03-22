@@ -4,9 +4,11 @@ Breadth first search algorithm
 
 from collections import OrderedDict
 
+
 from graph import Graph
 from digraph import DiGraph
 
+g = Graph()
 
 class BreadthFirstSearchPaths(object):
 

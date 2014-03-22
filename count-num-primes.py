@@ -25,3 +25,4 @@ if __name__ == '__main__':
     result = prime_numbers_count(number)
     print "The number of primes below %s is %s" % (number, len(result))
     #print "The primes are: %s" % result
+
