@@ -12,20 +12,19 @@ import math
 def _get_digit(num, pos):
     """Return the digit in the given position.
 
-    If the given number is negative the returned digit will be negative.
+    If the given number is negative the returned digit will be negative. The
+    positions start from right (1) to left.
 
     :param num: The number to extract the digits from.
     :param pos: The position of the digit to be extracted
     """
+    base = 10
     if pos <= 0:
         raise ValueError()
-    d = None
     sign = -1 if num < 0 else 1
     num = int(math.fabs(num))
-    while pos:
-        d = num % 10
-        num /= 10
-        pos -= 1
+    pos -= 1 # Convert to zero index
+    d = (num // base ** pos) % base
     return d * sign
 
 
