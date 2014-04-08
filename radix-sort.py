@@ -10,7 +10,9 @@ import math
 
 
 def _get_digit(num, pos):
-    """Return the digit in the given position
+    """Return the digit in the given position.
+
+    If the given number is negative the returned digit will be negative.
 
     :param num: The number to extract the digits from.
     :param pos: The position of the digit to be extracted
@@ -18,11 +20,13 @@ def _get_digit(num, pos):
     if pos <= 0:
         raise ValueError()
     d = None
+    sign = -1 if num < 0 else 1
+    num = int(math.fabs(num))
     while pos:
         d = num % 10
         num /= 10
         pos -= 1
-    return d
+    return d * sign
 
 
 def _num_digits(num):
@@ -105,6 +109,13 @@ class TestModule(unittest.TestCase):
 
     def test_get_digit_invalid_pos_large(self):
             self.assertEqual(0, _get_digit(234, 100))
+
+    def test_get_digit_negative_value(self):
+        self.assertEqual(-1, _get_digit(-1, 1))
+
+    def test_get_digit_negative_value_multiple(self):
+        self.assertEqual(-2, _get_digit(-123, 2))
+
 
     def test_radix_sorter_empty_list(self):
         self.assertEqual([], radix_sort([]))
