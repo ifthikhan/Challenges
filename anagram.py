@@ -4,18 +4,26 @@
 import unittest
 
 
-def is_anagram(char_dict, word):
+def is_anagram(main, word):
     """Return True/False on whether the give word is an anagram.
 
     The chars in the char dict must be lowercase
 
-    :param char_dict: A dictionary of characters with the char as key
-    :type char_dict: dict
+    :param main: The main word to check against.
+    :type main: str
     :param word: Word to check
     :type word: str
     :returns: bool
     """
-    if not word or not len(char_dict):
+    me = is_anagram
+    if not hasattr(me, 'char_dicts'):
+        me.char_dicts = {}
+    if not me.char_dicts.has_key(main):
+        char_dict = me.char_dicts[main] = {c: None for c in main}
+    else:
+        char_dict = me.char_dicts[main]
+
+    if not main or not word:
         raise ValueError("Empty words or dictionary not allowed")
     if len(char_dict) != len(word):
         return False
@@ -26,19 +34,21 @@ def is_anagram(char_dict, word):
 
 
 def find_anagrams(words):
-    i = 0
     result = []
-    anagramed = {}
-    for word in words:
-        if anagramed.has_key(word):
-            continue
-        i += 1
-        tmp = [word]
-        char_dict = {c: None for c in word}
-        for word in words[i:]:
-            if is_anagram(char_dict, word):
+    while len(words):
+        main = words.pop(0)
+        tmp = [main]
+        i = 0
+        for _ in range(len(words)):
+            try:
+                word = words[i]
+            except IndexError:
+                break
+            if is_anagram(main, word):
                 tmp.append(word)
-                anagramed[word] = None
+                words.pop(i)
+            else:
+                i += 1
         if len(tmp) > 1:
             result.append(tmp)
     return result
@@ -48,27 +58,26 @@ class TestAngram(unittest.TestCase):
 
     def test_is_anagram_empty_char_dict(self):
         with self.assertRaises(ValueError):
-            is_anagram({}, "hello")
+            is_anagram("", "hello")
 
     def test_is_anagram_empty_word(self):
         with self.assertRaises(ValueError):
-            is_anagram({"h": None, "e": None}, "")
+            is_anagram("he", "")
 
     def test_is_anagram_empty_params(self):
         with self.assertRaises(ValueError):
-            is_anagram({}, "")
+            is_anagram("", "")
 
     def test_is_anagram_success(self):
-        self.assertEqual(True, is_anagram({"h": None, "e": None}, "eh"))
+        self.assertEqual(True, is_anagram("he", "eh"))
 
     def test_is_anagram_caseless_success(self):
-        self.assertEqual(True, is_anagram({"h": None, "e": None}, "EH"))
+        self.assertEqual(True, is_anagram("he", "EH"))
 
     def test_is_anagram_unequal_length(self):
-        self.assertEqual(False, is_anagram({"h": None, "e": None, 'l': None, 'l':
-                                            None, 'o': None}, "he"))
+        self.assertEqual(False, is_anagram("hello", "he"))
 
-    def test_find_anagram_empty_words(self):
+    def xtest_find_anagram_empty_words(self):
         self.assertEqual([], find_anagrams([]))
 
     def test_find_anagram_empty_words(self):
