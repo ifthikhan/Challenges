@@ -34,10 +34,17 @@ def is_anagram(main, word):
 
 
 def find_anagrams(words):
+    """
+    Return a list of lists of anagrams for the given word list.
+
+    :param words: Word list
+    :type words: list
+    :returns: list
+    """
     result = []
     while len(words):
         main = words.pop(0)
-        tmp = [main]
+        tmp = []
         i = 0
         for _ in range(len(words)):
             try:
@@ -49,7 +56,8 @@ def find_anagrams(words):
                 words.pop(i)
             else:
                 i += 1
-        if len(tmp) > 1:
+        if len(tmp):
+            tmp.append(main)
             result.append(tmp)
     return result
 
