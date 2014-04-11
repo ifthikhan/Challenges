@@ -28,7 +28,7 @@ class Graph(object):
         Adds an edge connecting the two vertices
         """
         self.g[v].append(w)
-        self.g[w].append(v)
+        #self.g[w].append(v)
         self.__num_edges += 1
 
     def adjacent(self, v):
