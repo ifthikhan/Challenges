@@ -85,10 +85,10 @@ class TestAngram(unittest.TestCase):
     def test_is_anagram_unequal_length(self):
         self.assertEqual(False, is_anagram("hello", "he"))
 
-    def xtest_find_anagram_empty_words(self):
+    def test_find_anagram_empty_words(self):
         self.assertEqual([], find_anagrams([]))
 
-    def test_find_anagram_empty_words(self):
+    def test_find_anagram_success(self):
         words = ["star", "mary", "rats", "tars", "army"]
         anagrams = find_anagrams(words)
         print anagrams
