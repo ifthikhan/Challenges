@@ -19,12 +19,12 @@ def is_anagram(main, word):
     if not hasattr(me, 'char_dicts'):
         me.char_dicts = {}
     if not me.char_dicts.has_key(main):
-        char_dict = me.char_dicts[main] = {c: None for c in main}
+        char_dict = me.char_dicts[main] = {c.lower(): None for c in main}
     else:
         char_dict = me.char_dicts[main]
 
     if not main or not word:
-        raise ValueError("Empty words or dictionary not allowed")
+        raise ValueError("Empty words not allowed")
     if len(char_dict) != len(word):
         return False
     for c in word.lower():
@@ -64,7 +64,7 @@ def find_anagrams(words):
 
 class TestAngram(unittest.TestCase):
 
-    def test_is_anagram_empty_char_dict(self):
+    def test_is_anagram_empty_main(self):
         with self.assertRaises(ValueError):
             is_anagram("", "hello")
 
