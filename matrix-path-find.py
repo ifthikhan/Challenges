@@ -140,3 +140,19 @@ ppc: {paths_per_cell}
 if __name__ == '__main__':
     for i in range(2, 14):
         print_data(i, i)
+        
+"""
+Sample output for 
+matrix: 2 x 2   size: 4   paths: 2       len: 3 ppc: 0
+matrix: 3 x 3   size: 9   paths: 6       len: 5 ppc: 0
+matrix: 4 x 4   size: 16  paths: 20      len: 7 ppc: 1
+matrix: 5 x 5   size: 25  paths: 70      len: 9 ppc: 2
+matrix: 6 x 6   size: 36  paths: 252     len: 11 ppc: 7
+matrix: 7 x 7   size: 49  paths: 924     len: 13 ppc: 18
+matrix: 8 x 8   size: 64  paths: 3432    len: 15 ppc: 53
+matrix: 9 x 9   size: 81  paths: 12870   len: 17 ppc: 158
+matrix: 10 x 10 size: 100 paths: 48620   len: 19 ppc: 486
+matrix: 11 x 11 size: 121 paths: 184756  len: 21 ppc: 1526
+matrix: 12 x 12 size: 144 paths: 705432  len: 23 ppc: 4898
+matrix: 13 x 13 size: 169 paths: 2704156 len: 25 ppc: 16000
+"""
