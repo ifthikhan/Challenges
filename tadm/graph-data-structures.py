@@ -63,6 +63,21 @@ def adjacency_list_to_incident_matrix(adjacency_list):
     return incident_matrix
 
 
+def incident_matrix_to_adjacency_list(matrix):
+    adjacency_list = defaultdict(list)
+    def add_edge(x, y):
+        adjacency_list[x].append(y)
+        adjacency_list[y].append(x)
+
+    for vertices in matrix:
+        pairs = []
+        for index, v in enumerate(vertices):
+            if v:
+                pairs.append(index)
+        add_edge(*pairs)
+    return dict(adjacency_list)
+
+
 class TestConversion(unittest.TestCase):
 
     def test_adjacenecy_matrix_to_adjacency_list(self):
@@ -108,6 +123,32 @@ class TestConversion(unittest.TestCase):
        self.assertEqual(expected_result,
                         adjacency_list_to_incident_matrix(adj_matrix))
        import pprint; pprint.pprint(adjacency_list_to_incident_matrix(adj_matrix))
+
+    def test_incident_matrix_to_adjacency_list(self):
+       incident_matrix = [[1, 1, 0, 0, 0, 0],
+                          [1, 0, 1, 0, 0, 0],
+                          [1, 0, 0, 1, 0, 0],
+                          [1, 0, 0, 0, 1, 0],
+                          [1, 0, 0, 0, 0, 1],
+                          [0, 1, 1, 0, 0, 0],
+                          [0, 1, 0, 1, 0, 0],
+                          [0, 1, 0, 0, 1, 0],
+                          [0, 1, 0, 0, 0, 1],
+                          [0, 0, 1, 1, 0, 0],
+                          [0, 0, 1, 0, 1, 0],
+                          [0, 0, 1, 0, 0, 1],
+                          [0, 0, 0, 1, 1, 0],
+                          [0, 0, 0, 1, 0, 1],
+                          [0, 0, 0, 0, 1, 1]]
+       expected_result = {0: [1, 2, 3, 4, 5],
+                          1: [0, 2, 3, 4, 5],
+                          2: [0, 1, 3, 4, 5],
+                          3: [0, 1, 2, 4, 5],
+                          4: [0, 1, 2, 3, 5],
+                          5: [0, 1, 2, 3, 4]}
+       r = incident_matrix_to_adjacency_list(incident_matrix)
+       import pprint; pprint.pprint(r)
+       self.assertEqual(expected_result, r)
 
 
 if __name__ == '__main__':
