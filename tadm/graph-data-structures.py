@@ -50,16 +50,16 @@ def adjacency_list_to_incident_matrix(adjacency_list):
     list_len = len(adjacency_list)
     # Calculate the max number of edges in a graph of n vertices n*(n-1)/2
     max_edges = (list_len * (list_len - 1)) / 2
-    incident_matrix = [[0] * max_edges for _ in xrange(list_len)]
-    current_column = 0
-    for current_parent, vertices in adjacency_list.iteritems():
-        for vertex in vertices:
+    incident_matrix = [[0] * list_len for _ in xrange(max_edges)]
+    current_row = 0
+    for parent_vertex, vertices in adjacency_list.iteritems():
+        for child_vertex in vertices:
             # Since the graph is undirected we can ignore duplicating the edge.
-            if vertex < current_parent:
+            if child_vertex < parent_vertex:
                 continue
-            incident_matrix[current_parent][current_column] = 1
-            incident_matrix[vertex][current_column] = 1
-            current_column += 1
+            incident_matrix[current_row][parent_vertex] = 1
+            incident_matrix[current_row][child_vertex] = 1
+            current_row += 1
     return incident_matrix
 
 
@@ -90,12 +90,21 @@ class TestConversion(unittest.TestCase):
                      3: [0, 1, 2, 4, 5],
                      4: [0, 1, 2, 3, 5],
                      5: [0, 1, 2, 3, 4]}
-       expected_result = [[1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
-                          [0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0],
-                          [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0],
-                          [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1],
-                          [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1]]
+       expected_result = [[1, 1, 0, 0, 0, 0],
+                          [1, 0, 1, 0, 0, 0],
+                          [1, 0, 0, 1, 0, 0],
+                          [1, 0, 0, 0, 1, 0],
+                          [1, 0, 0, 0, 0, 1],
+                          [0, 1, 1, 0, 0, 0],
+                          [0, 1, 0, 1, 0, 0],
+                          [0, 1, 0, 0, 1, 0],
+                          [0, 1, 0, 0, 0, 1],
+                          [0, 0, 1, 1, 0, 0],
+                          [0, 0, 1, 0, 1, 0],
+                          [0, 0, 1, 0, 0, 1],
+                          [0, 0, 0, 1, 1, 0],
+                          [0, 0, 0, 1, 0, 1],
+                          [0, 0, 0, 0, 1, 1]]
        self.assertEqual(expected_result,
                         adjacency_list_to_incident_matrix(adj_matrix))
        import pprint; pprint.pprint(adjacency_list_to_incident_matrix(adj_matrix))
