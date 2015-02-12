@@ -10,7 +10,7 @@ def is_permutation(main, subject):
         return False
     main_set = set(main)
     subject_set = set(subject)
-    return True if len(main_set.intersection()) == len(main) else False
+    return True if len(main_set.intersection(subject_set)) == len(main) else False
 
 
 class TestCase(unittest.TestCase):
